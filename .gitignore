@@ -1,0 +1,11 @@
+#################  
+## Code::Blocks  
+#################  
+ 
+*.layout
+*.a
+*.depend
+*.cbp
+*.out
+bin/
+obj/
