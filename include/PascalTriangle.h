@@ -1,5 +1,6 @@
 #ifndef PASCALTRIANGLE_H
 #define PASCALTRIANGLE_H
+#include <cassert>
 
 template <int N>
 class PascalTriangle {
@@ -26,7 +27,8 @@ public:
         delete[] triangle;
     }
 
-    int ncr(int n, int r) {
+    int operator()(int n, int r) const {
+        assert(n<N);
         if(n < r) {
             return 0;
         }

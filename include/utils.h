@@ -4,18 +4,26 @@
 #include <vector>
 #include <bitset>
 
+
+enum cell_contents {CROSS=0, BLOCK=1};
+enum line {ROW=0, COLUMN=1};
+
 using namespace std;
 
-int sum(vector<int> v) {
+int sum(const vector<int>& v) {
     int sum = 0;
-    for(std::vector<int>::const_iterator it = v.begin(); it != v.end(); ++it) {
+    for(vector<int>::const_iterator it = v.begin(); it != v.end(); ++it) {
         sum += *it;
     }
     return sum;
 }
 
-void print(vector<int> v) {
-    for(std::vector<int>::const_iterator it = v.begin(); it != v.end(); ++it) {
+template <typename T>
+void print(const vector<T>& v) {
+    // "typename" it:
+    // This tells the compiler that vector<T>::iterator should be treated as a type,
+    // something it can't assume since iterator is dependent on what T is.
+    for(typename vector<T>::const_iterator it = v.begin(); it != v.end(); ++it) {
         cout << *it << " ";
     }
     cout << endl;
@@ -23,7 +31,7 @@ void print(vector<int> v) {
 
 
 template <int size>
-void print_cl(bitset<size> v, string cross = "X ", string block = "¢i") {
+void print_cl(const bitset<size>& v, string cross = "X", string block = "#") {
     for(int k = v.size() - 1; k >= 0; --k) {
         if(v[k] == 0) {
             cout << cross;
