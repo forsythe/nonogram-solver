@@ -4,9 +4,9 @@
 #include <vector>
 #include <bitset>
 
-
 enum cell_contents {CROSS=0, BLOCK=1};
 enum line {ROW=0, COLUMN=1};
+
 
 using namespace std;
 

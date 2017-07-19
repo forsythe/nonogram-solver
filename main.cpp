@@ -105,7 +105,7 @@ bitset<SIZE> fillLine(const vector<int>& crosses, const vector<int>& blocks) {
     }
     //cout << "filled row looks like: ";
     //cout << ans << endl;
-    print_cl<SIZE>(ans);
+    // print_cl<SIZE>(ans);
     return ans;
 }
 
@@ -127,18 +127,18 @@ const bitset<SIZE>& confirmed_crosses) {
     int bins = num_groups + 1; //bins
     int n = balls + bins - 1;
     int k = bins - 1;
-    cout << "balls = " << balls << endl;
-    cout << "bins = " << bins << endl;
-    cout << "n = " << n << endl;
-    cout << "k = " << k << endl;
+//    cout << "balls = " << balls << endl;
+//    cout << "bins = " << bins << endl;
+//    cout << "n = " << n << endl;
+//    cout << "k = " << k << endl;
     int maxindex = ncr(n, k); //how many possible combinations
-    cout << "there are <=" << maxindex << " combinations" << endl;
+//    cout << "there are <=" << maxindex << " combinations" << endl;
     int nstart; //0 index, enumerate the items to be chosen (k of them, from n total)
     int indexstart; //start here and go upwards to check new k-combinations
     for(int index = 0; index < maxindex; ++index) {
-        cout << "at index = " << setw(4) << index << ": ";
+//        cout << "at index = " << setw(4) << index << ": ";
         if(bad_index.find(index) != bad_index.end()) {
-            cout << "skipping..." << endl;
+//            cout << "skipping..." << endl;
             continue;
         }
         nstart = n - 1; //start looking from the rightmost obj (largest enumueratedy)
@@ -151,9 +151,9 @@ const bitset<SIZE>& confirmed_crosses) {
         //cout << "sab contains ";
         //print(sab);
         bitset<SIZE> temp = fillLine<SIZE>(convertSABtoBAB(sab, n), blocks);
-        cout << "temp: " << temp << endl;
-        cout << "confirmed blocks " << confirmed_blocks << endl;
-        cout << "confirmed crosses " << confirmed_crosses << endl;
+//        cout << "temp: " << temp << endl;
+//        cout << "confirmed blocks " << confirmed_blocks << endl;
+//        cout << "confirmed crosses " << confirmed_crosses << endl;
         if(((temp & confirmed_blocks) == confirmed_blocks)
                 && ((temp | confirmed_crosses) == confirmed_crosses)) {
             ans.push_back(temp);
@@ -172,8 +172,8 @@ inline bitset<SIZE> findCommonBlocks(const vector<bitset<SIZE>>& v) {
             ++it) {
         ans &= *it;
     }
-    cout << "common blocks:   ";
-    print_cl<ans.size()>(ans, ".", "#");
+    //cout << "common blocks:   ";
+    //print_cl<ans.size()>(ans, ".", "#");
     return ans;
 }
 
@@ -184,8 +184,8 @@ inline bitset<SIZE> findCommonCrosses(const vector<bitset<SIZE>>& v) {
             ++it) {
         ans |= *it;
     }
-    cout << "common crosses:  ";
-    print_cl<ans.size()>(ans, "X", ".");
+    //cout << "common crosses:  ";
+    //print_cl<ans.size()>(ans, "X", ".");
     return ans;
 }
 
@@ -197,9 +197,9 @@ int main() {
         changed = false;
         cout << grid << endl;
         for(int row = 0; row < HEIGHT ; row++) {
-            cout << "on row " << row << endl;
+            //cout << "on row " << row << endl;
             if(finished_row.find(row) != finished_row.end()) {
-                cout << "done this row..." << endl;
+                //cout << "done this row..." << endl;
                 continue;
             }
             vector<bitset<WIDTH>> candidates = findLinePossibilities<WIDTH>(row_hints[row],
@@ -207,39 +207,39 @@ int main() {
                                                grid.getRow(row, BLOCK), grid.getRow(row, CROSS));
             if(candidates.size() == 1) {
                 finished_row.insert(row);
-                cout << "****************************** finished row " << row << endl;
+                //cout << "****************************** finished row " << row << endl;
                 grid.setRow(row, candidates[0]);
-                cout << grid << endl;
+                //cout << grid << endl;
                 changed = true;
                 continue;
             }
             bitset<WIDTH> commonBlocks = findCommonBlocks<WIDTH>(candidates);
             bitset<WIDTH> commonCrosses = findCommonCrosses<WIDTH>(candidates);
             if(commonBlocks.any()) {
-                cout << "there were some common blocks!" << endl;
+                //cout << "there were some common blocks!" << endl;
                 for(int col = 0; col < WIDTH; col++) {
                     if(commonBlocks[WIDTH - col - 1] == BLOCK) { //iterate backwards
                         grid[row][col] = BLOCK;
                         changed = true;
                     }
                 }
-                cout << grid << endl;
+                //cout << grid << endl;
             }
             if(!commonCrosses.all()) {
-                cout << "there were some common crosses!" << endl;
+                //out << "there were some common crosses!" << endl;
                 for(int col = 0; col < WIDTH; col++) {
                     if(commonCrosses[WIDTH - col - 1] == CROSS) { //iterate backwards
                         grid[row][col] = CROSS;
                         changed = true;
                     }
                 }
-                cout << grid << endl;
+                //cout << grid << endl;
             }
         }
         for(int col = 0; col < WIDTH ; col++) {
-            cout << "on col " << col << endl;
+            //cout << "on col " << col << endl;
             if(finished_col.find(col) != finished_col.end()) {
-                cout << "done this col..." << endl;
+                //cout << "done this col..." << endl;
                 continue;
             }
             vector<bitset<HEIGHT>> candidates = findLinePossibilities<HEIGHT>(col_hints[col],
@@ -249,24 +249,24 @@ int main() {
             bitset<HEIGHT> commonCrosses = findCommonCrosses<HEIGHT>(candidates);
             if(candidates.size() == 1) {
                 finished_col.insert(col);
-                cout << "****************************** finished col " << col << endl;
+                //cout << "****************************** finished col " << col << endl;
                 grid.setCol(col, candidates[0]);
                 changed = true;
-                cout << grid << endl;
+                //cout << grid << endl;
                 continue;
             }
             if(commonBlocks.any()) {
-                cout << "there were some common blocks!" << endl;
+                // cout << "there were some common blocks!" << endl;
                 for(int row = 0; row < HEIGHT; row++) {
                     if(commonBlocks[HEIGHT - row - 1] == BLOCK) {
                         grid[row][col] = BLOCK;
                         changed = true;
                     }
                 }
-                cout << grid << endl;
+                //cout << grid << endl;
             }
             if(!commonCrosses.all()) {
-                cout << "there were some common crosses!" << endl;
+                //cout << "there were some common crosses!" << endl;
                 for(int row = 0; row < HEIGHT; row++) {
                     if(commonCrosses[HEIGHT - row - 1] == CROSS) {
                         grid[row][col] = CROSS;
@@ -274,12 +274,13 @@ int main() {
                     }
                 }
             }
-            cout << grid << endl;
+            //cout << grid << endl;
         }
         if(!changed) {
             break;
         }
     }
+    cout << grid << endl;
     //print(grid.getRow(0, CROSS));
 //    vector<bitset<WIDTH>> ans = findLinePossibilities(hints);
 //    findCommonBlocks(ans);

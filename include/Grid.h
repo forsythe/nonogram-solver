@@ -39,12 +39,12 @@ public:
     //warning: either gets the known blocks, or known crosses, but not both
     bitset<H> getCol(int c, int want) {
         bitset<H> ans;
-        cout << "called getCol" << endl;
+        //cout << "called getCol" << endl;
         if(want == BLOCK) {
-            cout << "block wanted" << endl;
+            //cout << "block wanted" << endl;
             for(int r = 0; r < H; r++) { //iterate backwards
                 ans <<= 1;
-                cout << ans << endl;
+                //cout << ans << endl;
                 if(grid[r][c] == BLOCK) {
                     ans.set(0, BLOCK);
                 }
@@ -58,8 +58,7 @@ public:
             }
             ans.flip();
         }
-        cout << "mode: " << (want == BLOCK ? "BLOCK" : "CROSS") << " "  << c << " looks like " << ans <<
-             endl;
+        //cout << "mode: " << (want == BLOCK ? "BLOCK" : "CROSS") << " "  << c << " looks like " << ans << endl;
         return ans;
     }
 
@@ -86,13 +85,13 @@ public:
     }
 
     void setCol(int c, const bitset<H>& col) {
-        cout << "called setcol" << endl;
+        //cout << "called setcol" << endl;
         for(int r = 0; r < H; r++) {
             grid[r][c] = col[H - r - 1];
         }
     }
     void setRow(int r, const bitset<W>& row) {
-        cout << "called setrow" << endl;
+        //cout << "called setrow" << endl;
         for(int c = 0; c < W; c++) {
             grid[r][c] = row[W - c - 1];
         }
@@ -115,13 +114,13 @@ ostream& operator<<(ostream& os, const Grid<A, B>& g) {
         for(int c = 0; c < g.width; c++) {
             switch(g[r][c]) {
             case BLOCK:
-                os << "#";
+                os << "##";
                 break;
             case CROSS:
-                os << "X";
+                os << ". ";
                 break;
             default:
-                os << ".";
+                os << "  ";
             }
         }
         os << endl;
