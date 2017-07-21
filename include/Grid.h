@@ -25,7 +25,7 @@ public:
         }
         for(int r = 0; r < H; r++) {
             for(int c = 0; c < W; c++) {
-                grid[r][c] = -1;
+                grid[r][c] = UNKNOWN;
             }
         }
     }
