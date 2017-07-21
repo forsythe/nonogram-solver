@@ -11,18 +11,18 @@ public:
             triangle[n] = new int[n + 1];
         }
         for(int n = 0; n < N; n++) {
-            for(int k = 0; k < n + 1; k++) {
-                if(n == k || k == 0) {
-                    triangle[n][k] = 1;
+            for(int row = 0; row < n + 1; row++) {
+                if(n == row || row == 0) {
+                    triangle[n][row] = 1;
                 } else {
-                    triangle[n][k] = triangle[n - 1][k - 1] + triangle[n - 1][k];
+                    triangle[n][row] = triangle[n - 1][row - 1] + triangle[n - 1][row];
                 }
             }
         }
     }
     ~PascalTriangle() {
-        for(int k = 0; k < N; k++) {
-            delete[] triangle[k];
+        for(int row = 0; row < N; row++) {
+            delete[] triangle[row];
         }
         delete[] triangle;
     }

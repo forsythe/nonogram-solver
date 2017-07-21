@@ -4,9 +4,12 @@
 #include <vector>
 #include <bitset>
 
-enum cell_contents {UNKNOWN=-1, CROSS=0, BLOCK=1};
-enum line {ROW=0, COLUMN=1};
+#define SHOWSTEPS false
+#define SCROLL false
+#define VALIDATION true
 
+enum cell_contents {UNKNOWN = -1, CROSS = 0, BLOCK = 1};
+enum line {ROW = 0, COLUMN = 1};
 
 using namespace std;
 
@@ -32,8 +35,8 @@ void print(const vector<T>& v) {
 
 template <int size>
 void print_cl(const bitset<size>& v, string cross = "X", string block = "#") {
-    for(int k = v.size() - 1; k >= 0; --k) {
-        if(v[k] == 0) {
+    for(int row = v.size() - 1; row >= 0; --row) {
+        if(v[row] == 0) {
             cout << cross;
         } else {
             cout << block;

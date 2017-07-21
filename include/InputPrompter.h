@@ -26,22 +26,17 @@ public:
         } else {
             cout << "Enter hints for row, left to right, separate by space" << endl;
         }
-        for(int k = 0; k < SIZE; k++) {
-            cout << (CHOICE == COLUMN ? "columns " : "rows ") << (k + 1) << ": ";
+        for(int row = 0; row < SIZE; row++) {
+            cout << (CHOICE == COLUMN ? "columns " : "rows ") << (row + 1) << ": ";
             string s;
             getline(cin, s);
             int token;
             istringstream iss(s);
             while(iss >> token) {
-                ans[k].push_back(token);
+                ans[row].push_back(token);
             }
         }
-        for(int c = 0; c < ans.size(); c++) {
-            for(int val = 0; val < ans[c].size(); val++) {
-                cout << ans[c][val] << " ";
-            }
-            cout << endl;
-        }
+
         return ans;
     }
 

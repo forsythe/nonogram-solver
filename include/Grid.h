@@ -3,9 +3,14 @@
 
 #include <iostream>
 #include <vector>
+#include <stdio.h>
+#include <conio.h>
+#include <windows.h>
+
 #include "utils.h"
 using namespace std;
 
+extern bool invalid;
 
 template <int W, int H>
 class Grid {
@@ -85,14 +90,22 @@ public:
     }
 
     void setCol(int c, const bitset<H>& col) {
-        //cout << "called setcol" << endl;
         for(int r = 0; r < H; r++) {
+            if(VALIDATION) {
+                if(grid[r][c] == 1 - col[H - r - 1]) {
+                    invalid = true;
+                }
+            }
             grid[r][c] = col[H - r - 1];
         }
     }
     void setRow(int r, const bitset<W>& row) {
-        //cout << "called setrow" << endl;
         for(int c = 0; c < W; c++) {
+            if(VALIDATION) {
+                if(grid[r][c] == 1 - row[W - c - 1]) {
+                    invalid = true;
+                }
+            }
             grid[r][c] = row[W - c - 1];
         }
     }
@@ -114,10 +127,10 @@ ostream& operator<<(ostream& os, const Grid<A, B>& g) {
         for(int c = 0; c < g.width; c++) {
             switch(g[r][c]) {
             case BLOCK:
-                os << "##";
+                os << "¢i";
                 break;
             case CROSS:
-                os << ". ";
+                os << "  ";
                 break;
             default:
                 os << "  ";
@@ -128,5 +141,61 @@ ostream& operator<<(ostream& os, const Grid<A, B>& g) {
     return os;
 }
 
-
+template<int WIDTH, int HEIGHT>
+void pretty_print(const Grid<WIDTH, HEIGHT>& g, const vector<vector<int>>& col_hints,
+                  const vector<vector<int>>& row_hints) {
+    int max_row_hint_length = 0;
+    int max_col_hint_length = 0;
+    if(SCROLL) {
+        COORD coord;
+        coord.X = 0;
+        coord.Y = HEIGHT + max_col_hint_length + 10;
+        SetConsoleCursorPosition(
+            GetStdHandle(STD_OUTPUT_HANDLE),
+            coord
+        );
+    }
+    for(int k = 0; k < row_hints.size(); k++) {
+        max_row_hint_length = max(max_row_hint_length, (int)row_hints[k].size());
+    }
+    for(int k = 0; k < col_hints.size(); k++) {
+        max_col_hint_length = max(max_col_hint_length, (int)col_hints[k].size());
+    }
+    for(int k = 0; k <= max_col_hint_length; k++) {
+        for(int k = 0; k < max_row_hint_length; k++) {
+            cout << "  "; //horizontal offset for the column hints
+        }
+        cout << " ";
+        for(int col = 0; col < col_hints.size(); col++) {
+            if(max_col_hint_length - k <  col_hints[col].size()) {
+                cout << setw(2) << col_hints[col][k - (max_col_hint_length - col_hints[col].size()) - 1];
+            } else {
+                cout << "  ";
+            }
+        }
+        cout << endl;
+    }
+    for(int row = 0; row < row_hints.size(); row++) {
+        for(int s = 0; s < max_row_hint_length - row_hints[row].size(); s++) { //horizontal offset for row hints
+            cout << "  ";
+        }
+        for(int v = 0; v < row_hints[row].size(); v++) {
+            cout << setw(2) << row_hints[row][v];
+        }
+        cout << " ";
+        for(int c = 0; c < WIDTH; c++) {
+            switch(g[row][c]) {
+            case BLOCK:
+                cout << "¢i";
+                break;
+            case CROSS:
+                cout << ". ";
+                break;
+            default:
+                cout << "  ";
+            }
+        }
+        cout << endl;
+    }
+}
 #endif // GRID_H
