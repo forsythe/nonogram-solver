@@ -6,7 +6,7 @@
 
 
 #define SHOWSTEPS true
-#define SCROLL false
+#define NOSCROLL true
 #define VALIDATION true
 
 enum cell_contents {UNKNOWN = -1, CROSS = 0, BLOCK = 1};

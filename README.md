@@ -12,7 +12,7 @@ const int HEIGHT = 15;
 Changing appearance & behavior:  
 ```
 #define SHOWSTEPS false
-#define SCROLL false
+#define NOSCROLL true
 #define VALIDATION true
 ```
 
