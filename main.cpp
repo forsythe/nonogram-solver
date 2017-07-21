@@ -218,7 +218,7 @@ int main() {
             if(commonBlocks.any()) {
                 //cout << "there were some common blocks!" << endl;
                 for(int col = 0; col < WIDTH; col++) {
-                    if(commonBlocks[WIDTH - col - 1] == BLOCK) { //iterate backwards
+                    if(commonBlocks[WIDTH - col - 1] == BLOCK && grid[row][col] == UNKNOWN) { //iterate backwards
                         grid[row][col] = BLOCK;
                         changed = true;
                     }
@@ -228,7 +228,7 @@ int main() {
             if(!commonCrosses.all()) {
                 //out << "there were some common crosses!" << endl;
                 for(int col = 0; col < WIDTH; col++) {
-                    if(commonCrosses[WIDTH - col - 1] == CROSS) { //iterate backwards
+                    if(commonCrosses[WIDTH - col - 1] == CROSS && grid[row][col] == UNKNOWN) { //iterate backwards
                         grid[row][col] = CROSS;
                         changed = true;
                     }
@@ -258,7 +258,7 @@ int main() {
             if(commonBlocks.any()) {
                 // cout << "there were some common blocks!" << endl;
                 for(int row = 0; row < HEIGHT; row++) {
-                    if(commonBlocks[HEIGHT - row - 1] == BLOCK) {
+                    if(commonBlocks[HEIGHT - row - 1] == BLOCK && grid[row][col] == UNKNOWN) {
                         grid[row][col] = BLOCK;
                         changed = true;
                     }
@@ -268,7 +268,7 @@ int main() {
             if(!commonCrosses.all()) {
                 //cout << "there were some common crosses!" << endl;
                 for(int row = 0; row < HEIGHT; row++) {
-                    if(commonCrosses[HEIGHT - row - 1] == CROSS) {
+                    if(commonCrosses[HEIGHT - row - 1] == CROSS && grid[row][col] == UNKNOWN) {
                         grid[row][col] = CROSS;
                         changed = true;
                     }
