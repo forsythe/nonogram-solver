@@ -4,7 +4,8 @@
 #include <vector>
 #include <bitset>
 
-#define SHOWSTEPS false
+
+#define SHOWSTEPS true
 #define SCROLL false
 #define VALIDATION true
 

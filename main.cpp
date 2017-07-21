@@ -15,8 +15,8 @@
 using namespace std;
 
 
-const int WIDTH = 15;
-const int HEIGHT = 15;
+const int HEIGHT = 25;
+const int WIDTH = 25;
 static PascalTriangle<2 * WIDTH> ncr;
 static Grid<WIDTH, HEIGHT> grid;
 
